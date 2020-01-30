@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>biod</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+</head>
+
+<body style="height: 776px;">
+    <!-- Start: Navigation with Search -->
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean-search">
+        <div class="container"><a class="navbar-brand" href="#" style="font-size: 46px;color: rgb(244,71,107);">Notes</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+
+            <form name="logout" th:action="@{/logout}" method="post">
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <input class="btn btn-danger" type="submit" value="Logout">
+                </div>
+            </form>
+
+        </div>
+    </nav>
+    <!-- End: Navigation with Search -->
+    <!-- Start: Projects Horizontal -->
+    <div class="projects-horizontal">
+        <div class="container">
+            <h1 style="margin-left: 30px;">Add note</h1>
+            <!-- Start: Intro -->
+            <div class="intro" style="margin: 0px;max-width: none;"></div>
+            <!-- End: Intro -->
+            <!-- Start: Projects -->
+            <div class="row projects">
+                <div class="col-xl-12">
+                    <div class="row">
+                        <div class="col">
+                            <form method="post" class="note" action="#" th:action="@{/addNote}" th:object="${note}">
+                                <strong>Title</strong>
+                                <input th:field="*{title}" class="form-control" type="text">
+                                <strong>Text</strong>
+                                <textarea th:field="*{text}" class="form-control"></textarea>
+                                <strong>Public</strong>
+                                <input th:field="*{common}" th:checked="${true}" type="checkbox" style="margin: 10px;">
+                                <div class="form-group">
+                                    <button class="btn btn-light btn-sm border rounded action-button" type="submit">Add note</button>
+                                </div>
+<!--                                <div class="col"><a class="btn btn-light btn-sm border rounded action-button" role="submit" style="margin-right: 0px;margin-left: auto;background-color: rgb(244,71,107);margin-top: 10px;color: #ffffff;">Add note</a></div>-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End: Projects -->
+        </div>
+    </div>
+    <!-- End: Projects Horizontal -->
+    <!-- Start: Projects Horizontal -->
+    <div class="projects-horizontal">
+        <div class="container">
+            <h1 style="margin-left: 0px;">Yours</h1>
+            <!-- Start: Projects -->
+            <div class="row projects">
+                <div class="col-xl-12" th:each="notes : ${authorNote}">
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="name" th:text="${notes.title}">Note Title</h3>
+                        </div>
+                        <div class="col">
+                            <p class="text-right" th:text="${notes.author}">Author</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="description" th:text="${notes.text}">Lorem ipsum...</p>
+                        </div>
+                        <div class="col-xl-2">
+                            <div><strong>Add user to note</strong></div>
+                            <div>
+<!--                                TODO-->
+                                <form action="#" th:action="@{/addUserToNote(note=${notes.id})}"
+                                      th:object="${addUser}" method="post">
+                                    <select th:field="*{username}" class="custom-select">
+                                        <optgroup label="This is a group" th:field="*{username}">
+                                            <option th:each="user : ${users}" th:value="${user.username}" th:text="${user.username}"></option>
+                                        </optgroup>
+                                    </select>
+                                    <button type="submit">Add</button>
+                                </form>
+                                <a th:href="@{/deleteNote(note=${notes.id})}"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="if (!(confirm('Are you sure to delete this note?')))return false">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+<!--                        <div class="col-xl-1 text-right" style="margin-right: 0px;margin-left: auto;">-->
+<!--                            <div class="form-group"><button class="btn btn-light btn-sm border rounded action-button" type="submit">Delete</button></div>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+            <!-- End: Projects -->
+        </div>
+    </div>
+    <!-- End: Projects Horizontal -->
+    <!-- Start: Projects Horizontal -->
+    <div class="projects-horizontal">
+        <div class="container">
+            <h1 style="margin-left: 0px;">Private</h1>
+            <!-- Start: Intro -->
+            <div class="intro" style="margin: 0px;max-width: none;"></div>
+            <!-- End: Intro -->
+            <!-- Start: Projects -->
+            <div class="row projects" th:each="notes : ${privateNote}">
+                <div class="col-xl-12">
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="name" th:text="${notes.title}">Note Title</h3>
+                        </div>
+                        <div class="col">
+                            <p class="text-right" th:text="${notes.author}">Author</p>
+                        </div>
+<!--                        <p class="text-right" th:text="${notes.text}">Author</p>-->
+                    </div>
+                    <p class="description" th:text="${notes.text}">Author</p>
+                </div>
+            </div>
+            <!-- End: Projects -->
+        </div>
+    </div>
+    <!-- End: Projects Horizontal -->
+    <!-- Start: Projects Horizontal -->
+    <div class="projects-horizontal">
+        <div class="container">
+            <h1 style="margin-left: 0px;">Public</h1>
+            <!-- Start: Intro -->
+            <div class="intro" style="margin: 0px;max-width: none;"></div>
+            <!-- End: Intro -->
+            <!-- Start: Projects -->
+            <div class="row projects" th:each="notes : ${publicNote}">
+                <div class="col-xl-12">
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="name" th:text="${notes.title}">Note Title</h3>
+                        </div>
+                        <div class="col">
+                            <p class="text-right" th:text="${notes.author}">Author</p>
+                        </div>
+                        <br>
+<!--                            <p class="text-right" th:text="${notes.text}">Author</p>-->
+                    </div>
+                    <p class="description" th:text="${notes.text}">Author</p>
+                </div>
+            </div>
+            <!-- End: Projects -->
+        </div>
+    </div>
+    <!-- End: Projects Horizontal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
