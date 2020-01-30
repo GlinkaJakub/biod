@@ -20,7 +20,7 @@ public class UsersRegisterDtoToUsers extends ConverterAdapter<Users, UsersRegist
         if (source.getPassword().equals(source.getConfirmPassword())){
             String encoded = new BCryptPasswordEncoder().encode(source.getPassword());
             String hash = BCrypt.hashpw(source.getPassword(), BCrypt.gensalt(12));
-//            System.out.println(encoded);
+            System.out.println(hash);
             target.setPassword(encoded);
 //            target.setPassword("{noop}" + source.getPassword());
         } else {

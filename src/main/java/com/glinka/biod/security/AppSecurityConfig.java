@@ -52,7 +52,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
      @Bean
      public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-//        return BCrypt.checkpw(
     }
 
     @Override
@@ -71,7 +70,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/main.html", true)
                 .permitAll()
                 .and()
-                .logout().permitAll();
+                .logout().permitAll()
+                .deleteCookies("JSESSIONID");
 
         //TODO
         http.csrf().disable();

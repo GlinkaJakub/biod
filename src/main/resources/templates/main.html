@@ -13,7 +13,15 @@
 <body style="height: 776px;">
     <!-- Start: Navigation with Search -->
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-search">
-        <div class="container"><a class="navbar-brand" href="#" style="font-size: 46px;color: rgb(244,71,107);">Notes</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container">
+            <a class="navbar-brand" href="#" style="font-size: 46px;color: rgb(244,71,107);">Notes</a>
+            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a class="forgot" href="changepass.html">Change password</a>
+
 
             <form name="logout" th:action="@{/logout}" method="post">
                 <div class="collapse navbar-collapse" id="navcol-1">

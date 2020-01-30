@@ -2,6 +2,7 @@ package com.glinka.biod.service;
 
 import com.glinka.biod.converter.ConverterAdapter;
 import com.glinka.biod.dto.UsersDto;
+import com.glinka.biod.dto.UsersNewPasswordDto;
 import com.glinka.biod.dto.UsersRegisterDto;
 import com.glinka.biod.entity.Authorities;
 import com.glinka.biod.entity.Users;
@@ -19,12 +20,14 @@ public class UserServiceImpl implements UserService {
 
     private final ConverterAdapter<Users, UsersRegisterDto> usersRegDtoToUsersConverter;
     private final ConverterAdapter<UsersDto, Users> usersToUsersDtoConverter;
+    private final ConverterAdapter<Users, UsersNewPasswordDto> usersPassDtoToUsersConverter;
 
-    public UserServiceImpl(UsersRepository usersRepository, AuthoritiesRepository authoritiesRepository, ConverterAdapter<Users, UsersRegisterDto> usersRegDtoToUsersConverter, ConverterAdapter<UsersDto, Users> usersToUsersDtoConverter) {
+    public UserServiceImpl(UsersRepository usersRepository, AuthoritiesRepository authoritiesRepository, ConverterAdapter<Users, UsersRegisterDto> usersRegDtoToUsersConverter, ConverterAdapter<UsersDto, Users> usersToUsersDtoConverter, ConverterAdapter<Users, UsersNewPasswordDto> usersPassDtoToUsersConverter) {
         this.usersRepository = usersRepository;
         this.authoritiesRepository = authoritiesRepository;
         this.usersRegDtoToUsersConverter = usersRegDtoToUsersConverter;
         this.usersToUsersDtoConverter = usersToUsersDtoConverter;
+        this.usersPassDtoToUsersConverter = usersPassDtoToUsersConverter;
     }
 
     @Override
@@ -38,8 +41,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users changePassword() {
-        return null;
+    public Users changePassword(UsersNewPasswordDto users) {
+        Users user = usersPassDtoToUsersConverter.convert(users);
+        return usersRepository.saveAndFlush(user);
     }
 
     @Override

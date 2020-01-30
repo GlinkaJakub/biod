@@ -2,6 +2,7 @@ package com.glinka.biod.controller;
 
 import com.glinka.biod.dto.NoteDto;
 import com.glinka.biod.dto.UsersDto;
+import com.glinka.biod.dto.UsersNewPasswordDto;
 import com.glinka.biod.dto.UsersRegisterDto;
 import com.glinka.biod.entity.Note;
 import com.glinka.biod.entity.Users;
@@ -46,6 +47,23 @@ class ViewController {
     public String register(@ModelAttribute("user") UsersRegisterDto users){
         userService.register(users);
         return "redirect:/login.html";
+    }
+
+    @GetMapping("/changepass.html")
+    public String changepass(Model model, Authentication authentication){
+        UsersNewPasswordDto usersNewPasswordDto = new UsersNewPasswordDto();
+        model.addAttribute("updateUser", usersNewPasswordDto);
+
+        return "changepass";
+    }
+
+    @Transactional
+    @PostMapping("/changepass")
+    public String changepass(@ModelAttribute("updateUser") UsersNewPasswordDto users, Authentication authentication){
+        String username = authentication.getName();
+        users.setUsername(username);
+        userService.changePassword(users);
+        return "redirect:/main.html";
     }
 
     @GetMapping("/main.html")
