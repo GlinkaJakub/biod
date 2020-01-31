@@ -18,11 +18,11 @@ public class UsersRegisterDtoToUsers extends ConverterAdapter<Users, UsersRegist
 
         target.setUsername(source.getUsername());
         if (source.getPassword().equals(source.getConfirmPassword())){
-            String encoded = new BCryptPasswordEncoder().encode(source.getPassword());
-            String hash = BCrypt.hashpw(source.getPassword(), BCrypt.gensalt(12));
-            System.out.println(hash);
-            target.setPassword(encoded);
-//            target.setPassword("{noop}" + source.getPassword());
+//            String encoded = new BCryptPasswordEncoder().encode(source.getPassword());
+            String salt = BCrypt.gensalt(12);
+            String hash = BCrypt.hashpw(source.getPassword(), salt);
+
+            target.setPassword(hash);
         } else {
             return null;
         }

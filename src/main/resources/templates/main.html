@@ -47,8 +47,10 @@
                             <form method="post" class="note" action="#" th:action="@{/addNote}" th:object="${note}">
                                 <strong>Title</strong>
                                 <input th:field="*{title}" class="form-control" type="text">
+                                <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Username Error</td>
                                 <strong>Text</strong>
                                 <textarea th:field="*{text}" class="form-control"></textarea>
+                                <td th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Username Error</td>
                                 <strong>Public</strong>
                                 <input th:field="*{common}" th:checked="${true}" type="checkbox" style="margin: 10px;">
                                 <div class="form-group">

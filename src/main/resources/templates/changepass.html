@@ -16,10 +16,17 @@
         <form method="post" class="updateUser" action="#" th:action="@{/changepass}" th:object="${updateUser}">
             <h2 class="sr-only">Change password</h2>
             <div class="illustration"><i class="icon ion-key"></i></div>
-            <div class="form-group"><input th:field="*{oldPassword}" class="form-control" type="password" name="old_password" placeholder="Old password"></div>
-            <div class="form-group"><input th:field="*{newPassword}" class="form-control" type="password" name="new_password" placeholder="New password"></div>
-            <div class="form-group"><input th:field="*{confirmPassword}" class="form-control" type="password" name="confirm_password" placeholder="Confirm password"></div>
-            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Save</button></div><a class="forgot" href="/main.html">← Return</a></form>
+            <div class="form-group"><input th:field="*{oldPassword}" class="form-control" type="password" name="old_password" placeholder="Old password">
+                <td th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}">Username Error</td>
+            </div>
+            <div class="form-group"><input th:field="*{newPassword}" class="form-control" type="password" name="new_password" placeholder="New password">
+                <td th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}">New Password Error</td>
+            </div>
+            <div class="form-group"><input th:field="*{confirmPassword}" class="form-control" type="password" name="confirm_password" placeholder="Confirm password">
+                <td th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Confirm Password Error</td>
+            </div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Save</button></div>
+            <a class="forgot" href="/main.html">← Return</a></form>
     </div>
     <!-- End: Login Form Clean -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
